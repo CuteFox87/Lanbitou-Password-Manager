@@ -28,7 +28,7 @@ password-manager/
 ## Init Database
 ```
 cd server
-python init_db.py
+python reset_db.py
 ```
 
 ## Backend
