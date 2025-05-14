@@ -70,7 +70,7 @@ python reset_db.py
 
 ## Frontend
 
-## Install Frontend package 
+### Install Frontend package 
 ```
 cd Lanbitou-Password-Manager/frontend
 npm install
