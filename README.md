@@ -68,10 +68,18 @@ cd server
 python reset_db.py
 ```
 
+## Frontend
+
 ## Install Frontend package 
 ```
 cd Lanbitou-Password-Manager/frontend
 npm install
+```
+
+### Start the Frontend
+```
+cd Lanbitou-Password-Manager/frontend
+npm run dev
 ```
 
 ## Backend
@@ -82,14 +90,6 @@ The backend uses JWT-based authentication with password hashing via Argon2. All 
 cd server
 flask run
 ```
-## Frontend
-
-### Start the Frontend
-```
-cd Lanbitou-Password-Manager/frontend
-npm run dev
-```
-
 ### Test auth function 
 
 ```
@@ -113,3 +113,4 @@ Login response:
 
 JWT Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc0NjU0NjYxMywianRpIjoiZjc4MGE2MTItOTJkYy00ZDZhLWFhMTAtOGZlN2E5YjljYjFkIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6MSwibmJmIjoxNzQ2NTQ2NjEzLCJjc3JmIjoiNWI4ODk3YjgtMzZlMS00NzBjLTkxMTgtYjhhYzIyZGRjMTVjIiwiZXhwIjoxNzQ2NTQ3NTEzfQ.TBPFU97cJ8vIZi7mQRb1Pvod-_ykF9JdAJtsxa2GoYI
 ```
+
