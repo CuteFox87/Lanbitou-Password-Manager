@@ -19,17 +19,23 @@ ph = PasswordHasher()
 def store_password():
     data = request.get_json()
 
-    current_user = int(get_jwt_identity())
+    current_user_id = int(get_jwt_identity())
 
     # Extract data from request
     site = data.get('site')
-    account = data.get('account')
-    password = data.get('password')
+    encrypted_data = data.get('encrypted_data')
+    iv = data.get('iv')
     
-    if not site:
+    if not site or not encrypted_data or not iv:
         return jsonify({"msg": f"{'site' if not site else ''} are required"}), 400
     
-    new_entry = UserPassword(user_id=current_user, site=site, account_hash=account, password_hash=password)
+    new_entry = UserPassword(
+        user_id=current_user_id,
+        site=site,
+        encrypted_data=encrypted_data,
+        iv=iv
+    )
+
     db.session.add(new_entry)
     db.session.commit()
 
