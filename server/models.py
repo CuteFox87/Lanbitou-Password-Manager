@@ -27,3 +27,23 @@ class UserPassword(db.Model):
     # account_hash = db.Column(db.String(256), nullable=True)
     # password_hash = db.Column(db.String(256), nullable=True)
     user = db.relationship('User', backref=db.backref('passwords', lazy=True))
+
+class PasswordAccess(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
+    group_id = db.Column(db.Integer, db.ForeignKey('group.id'), nullable=True)
+    password_id = db.Column(db.Integer, db.ForeignKey('user_password.id'), nullable=False)
+    permission = db.Column(db.String(10), nullable=False)  # 'read' or 'write'
+
+    # 關聯
+    user = db.relationship('User', backref='password_accesses')
+    group = db.relationship('Group', backref='password_accesses')
+    password = db.relationship('UserPassword', backref='accessors')
+
+
+class Group(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(120), unique=True, nullable=False)
+    description = db.Column(db.String(256))
+    manager_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    manager = db.relationship('User', backref='managed_groups')

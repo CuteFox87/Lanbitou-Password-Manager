@@ -10,6 +10,7 @@ from flask_cors import CORS  # 導入 CORS
 from models import db
 from auth import auth as auth_blueprint
 from storage import storage as storage_blueprint
+from get_passwords import get_passwords_bp
 
 app = Flask(__name__)
 
@@ -34,6 +35,7 @@ jwt = JWTManager(app)
 # 註冊藍圖
 app.register_blueprint(auth_blueprint)
 app.register_blueprint(storage_blueprint)
+app.register_blueprint(get_passwords_bp)
 
 # 添加簡單的根路由用於健康檢查
 @app.route('/')
