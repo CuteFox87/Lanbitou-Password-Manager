@@ -1,0 +1,26 @@
+{
+    "name": "lanbitou",
+    "description": "a Password Manager",
+    "version": "1.0",
+    "manifest_version": 3,
+    "action": {
+        "default_popup": "index.html",
+        "default_icon": "icon.png",
+        "default_title": "lanbitou"
+    },
+    "permissions": ["storage", "scripting", "activeTab"],
+    "web_accessible_resources": [
+        {
+            "resources": ["passwordList.html"],
+            "matches": ["<all_urls>"]
+        }
+    ],
+    "background": {"service_worker": "background.js"},
+    "content_scripts": [
+        {
+            "matches": ["<all_urls>"],
+            "js": ["content.js"],
+            "run_at": "document_end"
+        }
+    ]
+}
