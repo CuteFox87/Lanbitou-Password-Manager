@@ -62,6 +62,22 @@ export interface LoginResponse {
   is_first_login: boolean;
 }
 
+// 密碼存儲請求類型
+export interface PasswordStoreRequest {
+  site: string;
+  encrypted_data: string;
+  iv: string;
+}
+
+// 後端密碼條目類型
+export interface PasswordEntry {
+  id: number;
+  site: string;
+  encrypted_data: string;
+  iv: string;
+  owner_id: number;
+}
+
 /**
  * 通用 API 請求方法
  */
@@ -189,6 +205,79 @@ export async function login(email: string, loginKey: string): Promise<LoginRespo
  */
 export async function getUserInfo(): Promise<any> {
   return await apiRequest<any>('/user-info', 'GET', undefined, true);
+}
+
+/**
+ * 獲取所有密碼
+ */
+export async function getPasswords(): Promise<PasswordEntry[]> {
+  try {
+    console.log('正在獲取密碼列表');
+    const response = await apiRequest<PasswordEntry[]>('/passwords', 'GET', undefined, true);
+    console.log(`成功獲取 ${response.length} 個密碼條目`);
+    return response;
+  } catch (error) {
+    console.error('獲取密碼列表失敗:', error);
+    throw error;
+  }
+}
+
+/**
+ * 儲存新密碼
+ */
+export async function storePassword(passwordData: PasswordStoreRequest): Promise<{ msg: string }> {
+  try {
+    console.log('正在儲存新密碼');
+    const response = await apiRequest<{ msg: string }>('/storage', 'POST', passwordData, true);
+    console.log('密碼儲存成功');
+    return response;
+  } catch (error) {
+    console.error('儲存密碼失敗:', error);
+    throw error;
+  }
+}
+
+/**
+ * 更新密碼
+ */
+export async function updatePassword(
+  passwordId: number | string, 
+  passwordData: PasswordStoreRequest
+): Promise<{ msg: string }> {
+  try {
+    console.log(`正在更新密碼 ID: ${passwordId}`);
+    const response = await apiRequest<{ msg: string }>(
+      `/storage/${passwordId}`, 
+      'PUT', 
+      passwordData, 
+      true
+    );
+    console.log('密碼更新成功');
+    return response;
+  } catch (error) {
+    console.error('更新密碼失敗:', error);
+    throw error;
+  }
+}
+
+/**
+ * 刪除密碼
+ */
+export async function deletePassword(passwordId: number | string): Promise<{ msg: string }> {
+  try {
+    console.log(`正在刪除密碼 ID: ${passwordId}`);
+    const response = await apiRequest<{ msg: string }>(
+      `/storage/${passwordId}`, 
+      'DELETE', 
+      undefined, 
+      true
+    );
+    console.log('密碼刪除成功');
+    return response;
+  } catch (error) {
+    console.error('刪除密碼失敗:', error);
+    throw error;
+  }
 }
 
 /**

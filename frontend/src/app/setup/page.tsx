@@ -1,5 +1,6 @@
 'use client';
-
+// 待修改
+// 群組管理頁面
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { 
@@ -11,6 +12,7 @@ import {
   CardFooter 
 } from '@/components/layout_module/card';
 import { Section } from '@/components/layout_module/section';
+import { Navbar } from '@/components/layout_module/Navbar';
 import { useAuth } from '@/contexts/AuthContext';
 import * as cryptoUtils from '@/lib/crypto';
 
@@ -178,167 +180,170 @@ export default function ChangePasswordPage() {
   };
 
   return (
-    <Section spacing="lg" className="py-12">
-      <div className="mx-auto max-w-md">
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-2xl font-bold text-center">
-              變更密碼
-            </CardTitle>
-            <CardDescription className="text-center">
-              {step === 1 ? '輸入您的新密碼' : '確認變更'}
-            </CardDescription>
-          </CardHeader>
-          
-          <CardContent>
-            {errorMessage && (
-              <div className="mb-4 rounded-md bg-destructive/10 p-3 text-sm text-destructive">
-                {errorMessage}
-              </div>
-            )}
-
-            {step === 1 && (
-              <div className="space-y-4">
-                <div className="space-y-2">
-                  <label htmlFor="current-password" className="text-sm font-medium">
-                    當前密碼
-                  </label>
-                  <input
-                    id="current-password"
-                    name="current-password"
-                    type="password"
-                    autoComplete="current-password"
-                    required
-                    className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-                    value={currentPassword}
-                    onChange={(e) => setCurrentPassword(e.target.value)}
-                  />
+    <>
+      <Navbar />
+      <Section spacing="lg" className="py-12">
+        <div className="mx-auto max-w-md">
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-2xl font-bold text-center">
+                變更密碼
+              </CardTitle>
+              <CardDescription className="text-center">
+                {step === 1 ? '輸入您的新密碼' : '確認變更'}
+              </CardDescription>
+            </CardHeader>
+            
+            <CardContent>
+              {errorMessage && (
+                <div className="mb-4 rounded-md bg-destructive/10 p-3 text-sm text-destructive">
+                  {errorMessage}
                 </div>
+              )}
 
-                <div className="space-y-2">
-                  <label htmlFor="new-password" className="text-sm font-medium">
-                    新密碼
-                  </label>
-                  <input
-                    id="new-password"
-                    name="new-password"
-                    type="password"
-                    autoComplete="new-password"
-                    required
-                    className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-                    value={newPassword}
-                    onChange={(e) => setNewPassword(e.target.value)}
-                  />
-                  {newPassword && (
-                    <div className="mt-1">
-                      <div className="flex items-center gap-1 mb-1">
-                        {[1, 2, 3, 4, 5, 6].map((index) => (
-                          <div 
-                            key={index} 
-                            className={`h-1 flex-1 rounded-sm ${
-                              index <= passwordStrength.score 
-                                ? getStrengthColor(passwordStrength.score) 
-                                : "bg-gray-200"
-                            }`} 
-                          />
-                        ))}
-                      </div>
-                      <p className="text-xs text-muted-foreground">
-                        {passwordStrength.feedback}
-                      </p>
-                    </div>
-                  )}
-                </div>
-
-                <div className="space-y-2">
-                  <label htmlFor="confirm-password" className="text-sm font-medium">
-                    確認新密碼
-                  </label>
-                  <input
-                    id="confirm-password"
-                    name="confirm-password"
-                    type="password"
-                    autoComplete="new-password"
-                    required
-                    className={`w-full rounded-md border ${!passwordsMatch ? 'border-destructive' : 'border-input'} bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2`}
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                  />
-                  {!passwordsMatch && (
-                    <p className="text-xs text-destructive">
-                      密碼不匹配
-                    </p>
-                  )}
-                </div>
-
-                <div className="space-y-2">
-                  <label htmlFor="password-hint" className="text-sm font-medium">
-                    密碼提示 (選填)
-                  </label>
-                  <input
-                    id="password-hint"
-                    name="password-hint"
-                    type="text"
-                    className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-                    value={passwordHint}
-                    onChange={(e) => setPasswordHint(e.target.value)}
-                  />
-                  <p className="text-xs text-muted-foreground">
-                    為自己創建一個新的密碼提示，以防忘記密碼。不要直接包含密碼內容。
-                  </p>
-                </div>
-              </div>
-            )}
-
-            {step === 2 && (
-              <div className="space-y-4">
-                <div className="rounded-md bg-yellow-50 p-4">
-                  <h3 className="font-medium text-yellow-800">重要提醒</h3>
-                  <p className="mt-2 text-sm text-yellow-700">
-                    變更主密碼將需要重新加密您的所有密碼資料。請確認以下事項：
-                  </p>
-                  <ul className="list-disc ml-5 mt-2 text-sm text-yellow-700">
-                    <li>您已經記住了新主密碼</li>
-                    <li>變更密碼後需要使用新主密碼登入系統</li>
-                    <li>此操作不可撤銷</li>
-                  </ul>
-                  <p className="mt-3 text-sm font-medium text-yellow-800">
-                    確定要繼續嗎？
-                  </p>
-                </div>
-              </div>
-            )}
-
-            <div className="mt-6 flex justify-between">
               {step === 1 && (
-                <button
-                  type="button"
-                  className="btn-outline"
-                  onClick={() => router.push('/')}
-                >
-                  返回
-                </button>
+                <div className="space-y-4">
+                  <div className="space-y-2">
+                    <label htmlFor="current-password" className="text-sm font-medium">
+                      當前密碼
+                    </label>
+                    <input
+                      id="current-password"
+                      name="current-password"
+                      type="password"
+                      autoComplete="current-password"
+                      required
+                      className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                      value={currentPassword}
+                      onChange={(e) => setCurrentPassword(e.target.value)}
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <label htmlFor="new-password" className="text-sm font-medium">
+                      新密碼
+                    </label>
+                    <input
+                      id="new-password"
+                      name="new-password"
+                      type="password"
+                      autoComplete="new-password"
+                      required
+                      className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                      value={newPassword}
+                      onChange={(e) => setNewPassword(e.target.value)}
+                    />
+                    {newPassword && (
+                      <div className="mt-1">
+                        <div className="flex items-center gap-1 mb-1">
+                          {[1, 2, 3, 4, 5, 6].map((index) => (
+                            <div 
+                              key={index} 
+                              className={`h-1 flex-1 rounded-sm ${
+                                index <= passwordStrength.score 
+                                  ? getStrengthColor(passwordStrength.score) 
+                                  : "bg-gray-200"
+                              }`} 
+                            />
+                          ))}
+                        </div>
+                        <p className="text-xs text-muted-foreground">
+                          {passwordStrength.feedback}
+                        </p>
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="space-y-2">
+                    <label htmlFor="confirm-password" className="text-sm font-medium">
+                      確認新密碼
+                    </label>
+                    <input
+                      id="confirm-password"
+                      name="confirm-password"
+                      type="password"
+                      autoComplete="new-password"
+                      required
+                      className={`w-full rounded-md border ${!passwordsMatch ? 'border-destructive' : 'border-input'} bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2`}
+                      value={confirmPassword}
+                      onChange={(e) => setConfirmPassword(e.target.value)}
+                    />
+                    {!passwordsMatch && (
+                      <p className="text-xs text-destructive">
+                        密碼不匹配
+                      </p>
+                    )}
+                  </div>
+
+                  <div className="space-y-2">
+                    <label htmlFor="password-hint" className="text-sm font-medium">
+                      密碼提示 (選填)
+                    </label>
+                    <input
+                      id="password-hint"
+                      name="password-hint"
+                      type="text"
+                      className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                      value={passwordHint}
+                      onChange={(e) => setPasswordHint(e.target.value)}
+                    />
+                    <p className="text-xs text-muted-foreground">
+                      為自己創建一個新的密碼提示，以防忘記密碼。不要直接包含密碼內容。
+                    </p>
+                  </div>
+                </div>
               )}
+
               {step === 2 && (
+                <div className="space-y-4">
+                  <div className="rounded-md bg-yellow-50 p-4">
+                    <h3 className="font-medium text-yellow-800">重要提醒</h3>
+                    <p className="mt-2 text-sm text-yellow-700">
+                      變更主密碼將需要重新加密您的所有密碼資料。請確認以下事項：
+                    </p>
+                    <ul className="list-disc ml-5 mt-2 text-sm text-yellow-700">
+                      <li>您已經記住了新主密碼</li>
+                      <li>變更密碼後需要使用新主密碼登入系統</li>
+                      <li>此操作不可撤銷</li>
+                    </ul>
+                    <p className="mt-3 text-sm font-medium text-yellow-800">
+                      確定要繼續嗎？
+                    </p>
+                  </div>
+                </div>
+              )}
+
+              <div className="mt-6 flex justify-between">
+                {step === 1 && (
+                  <button
+                    type="button"
+                    className="btn-outline"
+                    onClick={() => router.push('/')}
+                  >
+                    返回
+                  </button>
+                )}
+                {step === 2 && (
+                  <button
+                    type="button"
+                    className="btn-outline"
+                    onClick={() => setStep(1)}
+                  >
+                    上一步
+                  </button>
+                )}
                 <button
                   type="button"
-                  className="btn-outline"
-                  onClick={() => setStep(1)}
+                  className="btn ml-auto"
+                  onClick={handleNextStep}
                 >
-                  上一步
+                  {step === 1 ? '下一步' : '確認變更'}
                 </button>
-              )}
-              <button
-                type="button"
-                className="btn ml-auto"
-                onClick={handleNextStep}
-              >
-                {step === 1 ? '下一步' : '確認變更'}
-              </button>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-    </Section>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </Section>
+    </>
   );
 } 
