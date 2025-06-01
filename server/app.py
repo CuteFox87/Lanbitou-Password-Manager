@@ -4,13 +4,16 @@ server/app.py
 the main Flask application
 """
 
-from flask import Flask
+from flask import Flask, g
 from flask_jwt_extended import JWTManager
-from flask_cors import CORS  # 導入 CORS
+from flask_cors import CORS
+from sqlalchemy import text
 from models import db
 from auth import auth as auth_blueprint
 from storage import storage as storage_blueprint
 from get_passwords import get_passwords_bp
+from permission_storage import permission_storage as permission_storage_blueprint
+from groups import groups_bp 
 
 app = Flask(__name__)
 
@@ -36,8 +39,21 @@ jwt = JWTManager(app)
 app.register_blueprint(auth_blueprint)
 app.register_blueprint(storage_blueprint)
 app.register_blueprint(get_passwords_bp)
+app.register_blueprint(permission_storage_blueprint)
+app.register_blueprint(groups_bp)
 
-# 添加簡單的根路由用於健康檢查
+# 啟用 SQLite 外鍵約束（只在第一次請求時）
+@app.before_request
+def enable_sqlite_foreign_keys_once():
+    if getattr(g, '_fk_checked', False):
+        return
+    g._fk_checked = True
+
+    if db.engine.dialect.name == 'sqlite':
+        with db.engine.connect() as connection:
+            connection.execute(text("PRAGMA foreign_keys=ON"))
+
+# 健康檢查路由
 @app.route('/')
 def health_check():
     return {"status": "ok", "message": "Lanbitou Password Manager API is running"}
@@ -46,3 +62,18 @@ if __name__ == '__main__':
     with app.app_context():
         db.create_all()
     app.run(debug=True)
+
+from flask import jsonify
+@app.route("/debug/access")
+def debug_access():
+    from models import PasswordAccess
+    result = []
+    for a in PasswordAccess.query.all():
+        result.append({
+            "id": a.id,
+            "user_id": a.user_id,
+            "group_id": a.group_id,
+            "password_id": a.password_id,
+            "permission": a.permission.value
+        })
+    return jsonify(result)

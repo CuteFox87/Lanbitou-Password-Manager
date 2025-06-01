@@ -53,12 +53,6 @@ Lanbitou-Password-Manager/
 │   ├── eslint.config.mjs
 │   └── README.md
 │
-├── client_test/
-│   ├── test_auth.py
-│   ├── test_storage.py
-│   ├── test_e2ee.py
-│   └── requirements.txt
-│
 └── README.md
 
 ```
@@ -90,27 +84,5 @@ The backend uses JWT-based authentication with password hashing via Argon2. All 
 cd server
 flask run
 ```
-### Test auth function 
 
-```
-cd client_test
-python test_auth.py
-```
-
-Output:
-```
-----------
-
-Register response:
- 400 {'msg': 'User already exists'}
-
-----------
-
-Login response:
- 200 {'token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc0NjU0NjYxMywianRpIjoiZjc4MGE2MTItOTJkYy00ZDZhLWFhMTAtOGZlN2E5YjljYjFkIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6MSwibmJmIjoxNzQ2NTQ2NjEzLCJjc3JmIjoiNWI4ODk3YjgtMzZlMS00NzBjLTkxMTgtYjhhYzIyZGRjMTVjIiwiZXhwIjoxNzQ2NTQ3NTEzfQ.TBPFU97cJ8vIZi7mQRb1Pvod-_ykF9JdAJtsxa2GoYI', 'user_id': 1}
-
-----------
-
-JWT Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc0NjU0NjYxMywianRpIjoiZjc4MGE2MTItOTJkYy00ZDZhLWFhMTAtOGZlN2E5YjljYjFkIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6MSwibmJmIjoxNzQ2NTQ2NjEzLCJjc3JmIjoiNWI4ODk3YjgtMzZlMS00NzBjLTkxMTgtYjhhYzIyZGRjMTVjIiwiZXhwIjoxNzQ2NTQ3NTEzfQ.TBPFU97cJ8vIZi7mQRb1Pvod-_ykF9JdAJtsxa2GoYI
-```
 
