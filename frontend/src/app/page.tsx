@@ -192,7 +192,7 @@ export default function Dashboard() {
                   <ul className="list-disc pl-5 space-y-1 text-sm">
                     {passwordStats.weak > 0 && (
                       <li>
-                        您有 {passwordStats.weak} 個弱密碼。建議使用強密碼，至少8位，包含大小寫字母、數字和特殊符號。
+                        您有 {passwordStats.weak} 個弱密碼。建議使用強密碼，至少 8 位，包含大小寫字母、數字和特殊符號。
                       </li>
                     )}
                     {passwordStats.reused > 0 && (
@@ -211,7 +211,7 @@ export default function Dashboard() {
                 <div className="mt-6 p-4 bg-green-100 rounded-lg">
                   <h4 className="font-medium">做得好！</h4>
                   <p className="text-sm mt-1">
-                    您的密碼都很強壯且沒有重複使用。繼續保持良好的密碼衛生習慣！
+                    您的密碼強度高且沒有重複使用。繼續保持良好的密碼習慣！
                   </p>
                 </div>
               ) : null}
