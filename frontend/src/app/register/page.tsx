@@ -137,7 +137,7 @@ export default function Register() {
                 註冊成功
               </CardTitle>
               <CardDescription className="text-center">
-                您的藍筆頭密碼管理器帳戶已創建
+                您的 Lanbitou 密碼管理器帳戶已創建
               </CardDescription>
             </CardHeader>
             
@@ -174,7 +174,7 @@ export default function Register() {
               註冊帳戶
             </CardTitle>
             <CardDescription className="text-center">
-              建立您的藍筆頭密碼管理器帳戶
+              建立您的 Lanbitou 密碼管理器帳戶
             </CardDescription>
           </CardHeader>
           
@@ -204,7 +204,7 @@ export default function Register() {
 
               <div className="space-y-2">
                 <label htmlFor="password" className="text-sm font-medium">
-                  密碼
+                  主密碼
                 </label>
                 <input
                   id="password"
@@ -242,7 +242,7 @@ export default function Register() {
 
               <div className="space-y-2">
                 <label htmlFor="confirm-password" className="text-sm font-medium">
-                  確認密碼
+                  確認主密碼
                 </label>
                 <input
                   id="confirm-password"
@@ -263,7 +263,7 @@ export default function Register() {
 
               <div className="space-y-2">
                 <label htmlFor="password-hint" className="text-sm font-medium">
-                  密碼提示 (選填)
+                  主密碼提示 (選填)
                 </label>
                 <input
                   id="password-hint"
@@ -274,7 +274,7 @@ export default function Register() {
                   onChange={(e) => setPasswordHint(e.target.value)}
                 />
                 <p className="text-xs text-muted-foreground">
-                  為自己創建一個密碼提示，以防忘記密碼。不要直接包含密碼內容。
+                  為自己創建一個主密碼提示，以防忘記主密碼。不應直接包含主密碼內容。
                 </p>
               </div>
 
@@ -294,7 +294,7 @@ export default function Register() {
               <div className="rounded-md bg-blue-50 p-3 text-sm text-blue-600">
                 <h4 className="font-medium">主密碼非常重要</h4>
                 <p className="mt-1 text-xs">
-                  您設定的密碼將作為「主密碼」，用於加密您的所有密碼資料。
+                  您設定的密碼將作為「主密碼」，
                   我們採用零知識架構，伺服器不存儲您的主密碼，因此：
                 </p>
                 <ul className="list-disc ml-5 mt-1 text-xs">
