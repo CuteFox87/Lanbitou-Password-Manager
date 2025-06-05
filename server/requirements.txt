@@ -3,3 +3,4 @@ flask_sqlalchemy
 flask_jwt_extended
 argon2-cffi
 flask-cors
+argon2
