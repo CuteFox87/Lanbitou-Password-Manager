@@ -44,16 +44,6 @@ export function Navbar() {
               >
                 密碼管理
               </Link>
-              <Link 
-                href="/setup" 
-                className={`px-3 py-2 rounded-md transition-colors ${
-                  isActive('/setup') 
-                    ? 'bg-blue-100 text-blue-700 font-medium' 
-                    : 'hover:bg-blue-50 hover:text-blue-600'
-                }`}
-              >
-                群組管理
-              </Link>
             </div>
             
             <div className="flex items-center">
