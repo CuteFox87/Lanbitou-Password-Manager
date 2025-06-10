@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <title>Lanbitou 密碼庫</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <div class="container" style="max-width: 700px; margin: 32px auto;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+      <span style="font-weight: bold; font-size: 18px;">Lanbitou 密碼庫</span>
+      <button id="logout-btn" style="padding: 6px 16px;">登出</button>
+    </div>
+    <h2 style="text-align:center; margin-bottom: 4px;">所有密碼庫</h2>
+    <p style="text-align:center;">管理您存儲的所有密碼</p>
+    <div style="margin: 16px 0;">
+      <input id="search-input" type="text" placeholder="搜尋密碼..." style="width:100%;padding:8px;" />
+    </div>
+    <button id="create-group-btn" style="margin-bottom: 12px; width: 100%;">建立新群組</button>
+    <div id="error-msg" style="color:red;margin-bottom:8px;"></div>
+    <div id="password-list"></div>
+    <button id="add-btn" style="margin-top:16px;width:100%;">新增密碼</button>
+  </div>
+
+  <div id="modal-bg" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:99;align-items:center;justify-content:center;">
+    <div id="modal" style="background:#fff;padding:24px;border-radius:8px;max-width:400px;width:100%;">
+      <h3 id="modal-title"></h3>
+      <form id="password-form">
+        <input type="hidden" id="entry-id" />
+        <div>
+          <label>標題</label>
+          <input type="text" id="entry-title" required style="width:100%;" />
+        </div>
+        <div>
+          <label>用戶名/電子郵件</label>
+          <input type="text" id="entry-username" required style="width:100%;" />
+        </div>
+        <div>
+          <label>密碼</label>
+          <input type="password" id="entry-password" required style="width:100%;" />
+          <button type="button" id="toggle-password" style="margin-top:4px;">顯示/隱藏</button>
+        </div>
+        <div>
+          <label>網址</label>
+          <input type="url" id="entry-url" style="width:100%;" />
+        </div>
+        <div>
+          <label>附註</label>
+          <input type="text" id="entry-notes" style="width:100%;" />
+        </div>
+        <div style="margin-top:12px;text-align:right;">
+          <button type="button" id="cancel-btn">取消</button>
+          <button type="submit" id="save-btn">保存</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div id="group-modal-bg" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 101; align-items: center; justify-content: center;">
+    <div id="group-modal" style="background: #fff; padding: 24px; border-radius: 8px; max-width: 350px; width: 100%;">
+      <h3>建立新群組</h3>
+      <form id="group-form">
+        <div>
+          <label>群組名稱</label>
+          <input type="text" id="group-name" required style="width: 100%; margin-bottom: 8px;">
+        </div>
+        <div>
+          <label>描述（可選）</label>
+          <input type="text" id="group-desc" style="width: 100%; margin-bottom: 12px;">
+        </div>
+        <div id="group-error-msg" style="color: red; margin-bottom: 8px;"></div>
+        <div style="text-align: right;">
+          <button type="button" id="close-group-modal">取消</button>
+          <button type="submit">建立</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div id="permission-modal-bg" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 100; align-items: center; justify-content: center;">
+    <div id="permission-modal" style="background: #fff; padding: 24px; border-radius: 8px; max-width: 400px; width: 100%;">
+      <h3>密碼授權管理</h3>
+      <div id="permission-list" style="margin-bottom: 12px;"></div>
+      <form id="grant-permission-form" style="margin-bottom: 8px;">
+        <input type="hidden" id="grant-password-id">
+        <div>
+          <label>對象ID（user_id 或 group_id）</label>
+          <input type="number" id="grant-target-id" required style="width: 100%;">
+        </div>
+        <div>
+          <label>對象類型</label>
+          <select id="grant-target-type" style="width: 100%;">
+            <option value="user">使用者</option>
+            <option value="group">群組</option>
+          </select>
+        </div>
+        <div style="margin-top: 8px; text-align: right;">
+          <button type="submit">新增授權</button>
+          <button type="button" id="close-permission-modal">關閉</button>
+        </div>
+      </form>
+      <div id="permission-error-msg" style="color: red;"></div>
+    </div>
+  </div>
+  <script src="crypto.js"></script>
+  <script src="vault.js"></script>
+</body>
+</html>

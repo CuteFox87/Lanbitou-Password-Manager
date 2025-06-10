@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <title>Lanbitou 密碼管理器 - 註冊</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container" style="max-width: 400px; margin: 32px auto;">
+    <h2 style="text-align:center;">註冊帳戶</h2>
+    <p style="text-align:center;">建立您的 Lanbitou 密碼管理器帳戶</p>
+    <form id="register-form">
+      <div>
+        <label for="email">電子郵件</label>
+        <input id="email" name="email" type="email" required autocomplete="email" />
+      </div>
+      <div>
+        <label for="password">主密碼</label>
+        <input id="password" name="password" type="password" required autocomplete="new-password" />
+        <div id="password-strength-bar" style="margin: 4px 0;">
+        </div>
+        <p style="font-size:12px;color:#888;">
+          密碼必須至少8個字符，建議使用大小寫字母、數字和特殊符號組合
+        </p>
+        <p id="password-strength-feedback" style="font-size:12px;color:#888;"></p>
+      </div>
+      <div>
+        <label for="confirm-password">確認主密碼</label>
+        <input id="confirm-password" name="confirm-password" type="password" required autocomplete="new-password" />
+        <p id="password-match-feedback" style="font-size:12px;color:red;display:none;">密碼不匹配</p>
+      </div>
+      <div>
+        <label for="password-hint">主密碼提示 (選填)</label>
+        <input id="password-hint" name="password-hint" type="text" />
+        <p style="font-size:12px;color:#888;">
+          為自己創建一個主密碼提示，以防忘記主密碼。不應直接包含主密碼內容。
+        </p>
+      </div>
+      <div style="font-size:12px;color:#888;">
+        註冊帳戶代表您同意我們的
+        <a href="/terms" target="_blank">服務條款</a> 和
+        <a href="/privacy" target="_blank">隱私政策</a>
+      </div>
+      <div style="background:#e6f0fa;color:#2563eb;padding:8px;margin:8px 0;font-size:13px;border-radius:4px;">
+        <strong>主密碼非常重要</strong>
+        <ul style="margin:4px 0 0 18px;font-size:12px;">
+          <li>請設定一個強密碼並確保您能記住</li>
+          <li>忘記主密碼將無法恢復您的資料</li>
+          <li>任何人都無法重設您的主密碼</li>
+        </ul>
+      </div>
+      <button type="submit" id="register-btn" style="width:100%;">註冊</button>
+      <div id="form-error" style="color:red;margin-top:8px;"></div>
+      <div id="form-success" style="color:green;margin-top:8px;"></div>
+    </form>
+    <div style="text-align:center;margin-top:12px;">
+      已有帳戶？
+      <a href="#" id="to-login">登入</a>
+    </div>
+    <div id="register-success" style="display: none;">\
+      <h3>註冊成功</h3>
+      <p>您的 Lanbitou 密碼管理器帳戶已創建</p>
+      <p className="mt-2 text-sm">主密碼是您剛才設定的密碼，用於：</p>
+      <ul className="list-disc ml-5 mt-1 text-sm">
+        <li>身份驗證 - 系統不儲存您的主密碼，只儲存其衍生值</li>
+        <li>數據加密 - 所有密碼條目採用端到端加密，伺服器永不見明文</li>
+      </ul>
+       <p className="mt-2 text-xs font-semibold">請牢記您的主密碼，它無法恢復！</p>
+       <button id="go-login-btn" style="width:100%;margin-top:12px;">前往登入</button>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>
