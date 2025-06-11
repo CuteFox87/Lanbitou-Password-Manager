@@ -278,19 +278,6 @@ export default function Register() {
                 </p>
               </div>
 
-              <div className="space-y-2">
-                <p className="text-xs text-muted-foreground">
-                  註冊帳戶代表您同意我們的
-                  <Link href="/terms" className="font-medium text-primary hover:underline">
-                    服務條款
-                  </Link>
-                  {' '}和{' '}
-                  <Link href="/privacy" className="font-medium text-primary hover:underline">
-                    隱私政策
-                  </Link>
-                </p>
-              </div>
-
               <div className="rounded-md bg-blue-50 p-3 text-sm text-blue-600">
                 <h4 className="font-medium">主密碼非常重要</h4>
                 <p className="mt-1 text-xs">
