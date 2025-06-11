@@ -1,0 +1,130 @@
+.register-container {
+  max-width: 400px;
+  margin: 12px auto;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+  padding: 16px 24px;
+}
+
+.register-title {
+  text-align: center;
+}
+
+.register-subtitle {
+  text-align: center;
+}
+
+#password-strength-bar {
+  margin: 4px 0;
+}
+
+.password-strength-tip,#password-strength-feedback {
+  font-size: 12px;
+  color: #888;
+}
+
+#confirm-weak-btn {
+  margin: 12px auto 0 auto;
+  display: block;
+  background: #f59e42;
+  color: #fff;
+  border: none;
+  padding: 4px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+#password-match-feedback {
+  font-size: 12px;
+  color: red;
+  display: none;
+}
+
+.password-hint-tip {
+  font-size: 12px;
+  color: #888;
+}
+
+.password-warning-box {
+  background: #e6f0fa;
+  color: #2563eb;
+  padding: 8px;
+  margin: 8px 0;
+  font-size: 13px;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.password-warning-title {
+    display: block;
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 4px;
+}
+
+.password-warning-list {
+    margin: 4px 0 0 0;
+    padding-left: 0;
+    font-size: 12px;
+    text-align: left;
+    display: inline-block;
+}
+
+.password-warning-list li {
+    text-align: left;
+    margin-left: 0;
+    list-style: disc inside;
+}
+
+.password-warning-box ul {
+  margin: 4px 0 0 18px;
+  font-size: 12px;
+}
+
+#register-btn, #go-login-btn {
+  width: 100%;
+  margin-top: 12px;
+}
+
+#weak-password-warning {
+  display: none;
+  color: #b45309;
+  background: #fef3c7;
+  padding: 8px 12px;
+  border-radius: 4px;
+  margin-bottom: 8px;
+}
+
+#form-error {
+  color: red;
+  margin-top: 8px;
+}
+
+#form-success {
+  color: green;
+  margin-top: 8px;
+}
+
+.register-login-link {
+  text-align: center;
+  margin-top: 12px;
+}
+
+#register-success {
+  display: none;
+}
+
+.register-success-list {
+  list-style: disc;
+  margin-left: 20px;
+  margin-top: 8px;
+  font-size: 14px;
+}
+
+.register-success-tip {
+  margin-top: 8px;
+  font-size: 12px;
+  font-weight: 600;
+}

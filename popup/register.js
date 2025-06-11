@@ -7,6 +7,8 @@ document.addEventListener('DOMContentLoaded', function () {
   const passwordMatchFeedback = document.getElementById('password-match-feedback');
   const passwordStrengthBar = document.getElementById('password-strength-bar');
   const passwordStrengthFeedback = document.getElementById('password-strength-feedback');
+  const goLoginBtn = document.getElementById('go-login-btn');
+  const registerBtn = document.getElementById('register-btn');
 
   function assessPasswordStrength(password) {
     let score = 0;
@@ -67,6 +69,7 @@ document.addEventListener('DOMContentLoaded', function () {
     e.preventDefault();
     errorDiv.textContent = '';
     successDiv.textContent = '';
+    document.getElementById('weak-password-warning').style.display = 'none';
 
     const email = document.getElementById('email').value.trim();
     const password = passwordInput.value;
@@ -87,12 +90,23 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     const { score } = assessPasswordStrength(password);
-    if (score <= 2) {
-      if (!window.confirm('您的密碼強度較弱，這可能導致安全風險。確定要繼續嗎？')) {
-        return;
-      }
+    if (score <= 2 && !form.dataset.weakConfirmed) {
+      const warningDiv = document.getElementById('weak-password-warning');
+      warningDiv.innerHTML = `
+      <span>您的密碼強度較弱，這可能導致安全風險。</span>
+      <button id="confirm-weak-btn">仍要註冊</button>
+      `;
+      warningDiv.style.display = 'block';
+      registerBtn.style.display = 'none';
+      document.getElementById('confirm-weak-btn').onclick = function () {
+        form.dataset.weakConfirmed = 'true';
+        warningDiv.style.display = 'none';
+        registerBtn.style.display = '';
+        form.dispatchEvent(new Event('submit', {cancelable: true, bubbles: false}));
+      };
+      return;
     }
-
+    form.dataset.weakConfirmed = "";
     try {
       const res = await fetch('http://localhost:5000/register', {
         method: 'POST',
@@ -110,7 +124,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const goLoginBtn = document.getElementById('go-login-btn');
         if (goLoginBtn) {
           goLoginBtn.addEventListener('click', function(){
-            window.location.href = '/login'
+            window.location.href = 'login.html';
           });
         }
         form.reset();
@@ -125,4 +139,10 @@ document.addEventListener('DOMContentLoaded', function () {
       errorDiv.textContent = '無法連線到伺服器';
     }
   });
+
+  if (goLoginBtn) {
+    goLoginBtn.addEventListener('click', function () {
+      window.location.href = 'login.html';
+    });
+  }
 });

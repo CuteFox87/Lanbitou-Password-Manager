@@ -38,7 +38,6 @@ document.addEventListener('DOMContentLoaded', function () {
       window.location.href = 'login.html';
       return;
     }
-    // 取得加密金鑰（這裡假設你有 deriveEncryptionKey 實作，需根據主密碼和 data_salt）
     encryptionKey = await deriveEncryptionKey(result.master_password, result.data_salt);
     fetchPasswords();
   });
@@ -113,7 +112,6 @@ document.addEventListener('DOMContentLoaded', function () {
         </div>
       </div>
     `).join('');
-    // 綁定事件
     passwordListDiv.querySelectorAll('.copy-btn').forEach(btn => {
       btn.onclick = () => handleCopy(btn.dataset.id);
     });
@@ -183,7 +181,6 @@ document.addEventListener('DOMContentLoaded', function () {
         iv: encrypted.iv
       };
       if (entryId.value) {
-        // 編輯
         await fetch(`http://localhost:5000/storage/${entryId.value}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${await getToken()}` },
@@ -191,11 +188,10 @@ document.addEventListener('DOMContentLoaded', function () {
             site: entryTitle.value,
             encrypted_data: encrypted.ciphertext,
             iv: encrypted.iv,
-            notes: entryNotes.value // 新增 notes 欄位
+            notes: entryNotes.value
           })
         });
       } else {
-        // 新增
         await fetch('http://localhost:5000/storage', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${await getToken()}` },
@@ -203,7 +199,7 @@ document.addEventListener('DOMContentLoaded', function () {
             site: entryTitle.value,
             encrypted_data: encrypted.ciphertext,
             iv: encrypted.iv,
-            notes: entryNotes.value // 新增 notes 欄位
+            notes: entryNotes.value
           })
         });
       }

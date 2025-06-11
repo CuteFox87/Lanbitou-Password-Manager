@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <title>Lanbitou 密碼管理器 - 註冊</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="register.css">
 </head>
 <body>
-  <div class="container" style="max-width: 400px; margin: 32px auto;">
+  <div class="register-container">
     <h2 style="text-align:center;">註冊帳戶</h2>
     <p style="text-align:center;">建立您的 Lanbitou 密碼管理器帳戶</p>
     <form id="register-form">
@@ -17,17 +17,17 @@
       <div>
         <label for="password">主密碼</label>
         <input id="password" name="password" type="password" required autocomplete="new-password" />
-        <div id="password-strength-bar" style="margin: 4px 0;">
+        <div id="password-strength-bar">
         </div>
         <p style="font-size:12px;color:#888;">
           密碼必須至少8個字符，建議使用大小寫字母、數字和特殊符號組合
         </p>
-        <p id="password-strength-feedback" style="font-size:12px;color:#888;"></p>
+        <p id="password-strength-feedback"></p>
       </div>
       <div>
         <label for="confirm-password">確認主密碼</label>
         <input id="confirm-password" name="confirm-password" type="password" required autocomplete="new-password" />
-        <p id="password-match-feedback" style="font-size:12px;color:red;display:none;">密碼不匹配</p>
+        <p id="password-match-feedback">密碼不匹配</p>
       </div>
       <div>
         <label for="password-hint">主密碼提示 (選填)</label>
@@ -36,26 +36,22 @@
           為自己創建一個主密碼提示，以防忘記主密碼。不應直接包含主密碼內容。
         </p>
       </div>
-      <div style="font-size:12px;color:#888;">
-        註冊帳戶代表您同意我們的
-        <a href="/terms" target="_blank">服務條款</a> 和
-        <a href="/privacy" target="_blank">隱私政策</a>
-      </div>
-      <div style="background:#e6f0fa;color:#2563eb;padding:8px;margin:8px 0;font-size:13px;border-radius:4px;">
-        <strong>主密碼非常重要</strong>
-        <ul style="margin:4px 0 0 18px;font-size:12px;">
+      <div class="password-warning-box">
+        <strong class="password-warning-title">主密碼非常重要</strong>
+        <ul class="password-warning-list">
           <li>請設定一個強密碼並確保您能記住</li>
           <li>忘記主密碼將無法恢復您的資料</li>
           <li>任何人都無法重設您的主密碼</li>
         </ul>
       </div>
       <button type="submit" id="register-btn" style="width:100%;">註冊</button>
+      <div id="weak-password-warning" style="display:none;color:#b45309;background:#fef3c7;padding:8px 12px;border-radius:4px;margin-bottom:8px;"></div>
       <div id="form-error" style="color:red;margin-top:8px;"></div>
       <div id="form-success" style="color:green;margin-top:8px;"></div>
     </form>
     <div style="text-align:center;margin-top:12px;">
       已有帳戶？
-      <a href="#" id="to-login">登入</a>
+      <a href="login.html" id="to-login">登入</a>
     </div>
     <div id="register-success" style="display: none;">\
       <h3>註冊成功</h3>
@@ -68,6 +64,6 @@
        <p className="mt-2 text-xs font-semibold">請牢記您的主密碼，它無法恢復！</p>
        <button id="go-login-btn" style="width:100%;margin-top:12px;">前往登入</button>
   </div>
-  <script src="popup.js"></script>
+  <script src="register.js"></script>
 </body>
 </html>
