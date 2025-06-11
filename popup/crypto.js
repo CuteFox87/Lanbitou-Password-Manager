@@ -35,7 +35,7 @@ async function deriveLoginKey(masterPassword) {
       LOGIN_KEY_LENGTH * 8
     );
 
-    return derivedBits; // 直接回傳 ArrayBuffer
+    return arrayBufferToBase64(derivedBits); // 回傳 base64 字串
   } catch (error) {
     console.error('登入金鑰推導失敗:', error);
     throw new Error('登入金鑰推導失敗');
