@@ -114,17 +114,33 @@
 
 #register-success {
   display: none;
+  text-align: center;
+  margin-top: 24px;
+}
+
+#register-success h3 {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+
+.register-success-desc {
+  margin-top: 8px;
+  font-size: 15px;
 }
 
 .register-success-list {
   list-style: disc;
-  margin-left: 20px;
-  margin-top: 8px;
+  margin: 12px auto 0 auto;
+  padding-left: 24px;
+  text-align: left;
+  display: inline-block;
   font-size: 14px;
 }
 
 .register-success-tip {
-  margin-top: 8px;
-  font-size: 12px;
+  margin-top: 12px;
+  font-size: 13px;
   font-weight: 600;
+  color: #e11d48;
 }

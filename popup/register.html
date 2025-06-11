@@ -53,17 +53,17 @@
       已有帳戶？
       <a href="login.html" id="to-login">登入</a>
     </div>
-    <div id="register-success" style="display: none;">\
+    <div id="register-success" style="display: none;">
       <h3>註冊成功</h3>
       <p>您的 Lanbitou 密碼管理器帳戶已創建</p>
-      <p className="mt-2 text-sm">主密碼是您剛才設定的密碼，用於：</p>
-      <ul className="list-disc ml-5 mt-1 text-sm">
+      <p class="register-success-desc">主密碼是您剛才設定的密碼，用於：</p>
+      <ul class="register-success-list">
         <li>身份驗證 - 系統不儲存您的主密碼，只儲存其衍生值</li>
         <li>數據加密 - 所有密碼條目採用端到端加密，伺服器永不見明文</li>
       </ul>
-       <p className="mt-2 text-xs font-semibold">請牢記您的主密碼，它無法恢復！</p>
-       <button id="go-login-btn">前往登入</button>
-  </div>
+      <p class="register-success-tip">請牢記您的主密碼，它無法恢復！</p>
+      <button id="go-login-btn">前往登入</button>
+    </div>
   <script src="register.js"></script>
 </body>
 </html>
