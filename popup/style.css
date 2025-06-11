@@ -7,13 +7,13 @@ body {
 
 .container {
   max-width: 400px;
-  min-width: 260px;
-  width: 90vw;
+  min-width: 0;
+  width: 96vw;
   margin: 12px auto;
   background: #fff;
   border-radius: 12px;
   box-shadow: 0 2px 16px rgba(0,0,0,0.07);
-  padding: 16px 12px 24px 12px;
+  padding: 16px 8px 24px 8px;
 }
 
 .header-row {
@@ -21,12 +21,18 @@ body {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 12px;
+  gap: 8px;
+  min-width: 0;
 }
 
 .logo-title {
   font-weight: bold;
   font-size: 18px;
   line-height: 1.2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
 }
 
 .subtitle {
@@ -52,6 +58,10 @@ body {
   background: #e0e7ef;
 }
 
+.search-bar {
+  margin: 16px 0;
+}
+
 h2 {
   font-weight: 700;
   color: #2563eb;
@@ -67,6 +77,11 @@ button, input, select {
   border: 1px solid #d1d5db;
   outline: none;
   transition: border 0.2s, box-shadow 0.2s;
+  min-width: 0;
+}
+
+input, select {
+  margin-bottom: 12px;
 }
 
 button {
@@ -76,7 +91,7 @@ button {
   padding: 8px 20px;
   font-size: 15px;
   cursor: pointer;
-  margin: 4px 0;
+  margin: 8px 0;
   box-shadow: 0 1px 4px rgba(37, 99, 235, 0.88);
 }
 
@@ -128,10 +143,11 @@ input[type='text'], input[type='password'], input[type='url'], input[type='numbe
 
 #modal, #group-modal, #permission-modal {
   background: #fff;
-  padding: 24px;
+  padding: 16px 4vw;
   border-radius: 8px;
-  min-width: 220px;
-  max-width: 95vw;
+  min-width: 0;
+  max-width: 98vw;
+  box-sizing: border-box;
 }
 
 #group-modal {

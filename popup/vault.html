@@ -12,8 +12,8 @@
       <button id="logout-btn">登出</button>
     </div>
     <h2>所有密碼庫</h2>
-    <p style="text-align:center;">管理您存儲的所有密碼</p>
-    <div style="margin: 16px 0;">
+    <p class="subtitle">管理您存儲的所有密碼</p>
+    <div class="search-bar">
       <input id="search-input" type="text" placeholder="搜尋密碼..." />
     </div>
     <button id="create-group-btn">建立新群組</button>
@@ -48,7 +48,7 @@
           <label>附註</label>
           <input type="text" id="entry-notes"/>
         </div>
-        <div style="margin-top:12px;text-align:right;">
+        <div class="modal-btn-row">
           <button type="button" id="cancel-btn">取消</button>
           <button type="submit" id="save-btn">保存</button>
         </div>
@@ -68,7 +68,7 @@
           <input type="text" id="group-desc">
         </div>
         <div id="group-error-msg"></div>
-        <div style="text-align: right;">
+        <div class="modal-btn-row">
           <button type="button" id="close-group-modal">取消</button>
           <button type="submit">建立</button>
         </div>
@@ -92,7 +92,7 @@
             <option value="group">群組</option>
           </select>
         </div>
-        <div style="margin-top: 8px; text-align: right;">
+        <div class="modal-btn-row">
           <button type="submit">新增授權</button>
           <button type="button" id="close-permission-modal">關閉</button>
         </div>
