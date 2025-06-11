@@ -55,6 +55,7 @@ document.addEventListener('DOMContentLoaded', function () {
       passwords = await Promise.all(
         data.map(async (item) => {
           try {
+            console.log('[解密] encryptionKey(base64):', arrayBufferToBase64(encryptionKey));
             const decrypted = await decryptData(item.encrypted_data, item.iv, encryptionKey);
             const parsed = JSON.parse(decrypted);
             return {
@@ -67,6 +68,13 @@ document.addEventListener('DOMContentLoaded', function () {
               owner_id: item.owner_id
             };
           } catch (e) {
+            console.error('[解密失敗]', {
+              error: e,
+              id: item.id,
+              encrypted_data: item.encrypted_data,
+              iv: item.iv,
+              encryptionKey: arrayBufferToBase64(encryptionKey)
+            });
             return {
               id: item.id,
               title: item.site,
@@ -191,6 +199,10 @@ document.addEventListener('DOMContentLoaded', function () {
             notes: entryNotes.value
           })
         });
+        console.log('[加密] master_password:', result.master_password);
+        console.log('[加密] data_salt:', result.data_salt);
+        console.log('[加密] encryptionKey(base64):', arrayBufferToBase64(encryptionKey));
+    const encrypted = await encryptData(dataToEncrypt, encryptionKey);
       } else {
         await fetch('http://localhost:5000/storage', {
           method: 'POST',
