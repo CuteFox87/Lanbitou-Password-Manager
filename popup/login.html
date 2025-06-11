@@ -3,11 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <title>Lanbitou 密碼管理器 - 登入</title>
+  <link rel="stylesheet" href="login.css">
 </head>
 <body>
-  <div class="container" style="max-width: 400px; margin: 32px auto;">
-    <h2 style="text-align:center;">Lanbitou 密碼管理器</h2>
-    <p style="text-align:center;">請登入您的帳戶</p>
+  <div class="container">
+    <h2 class="login-title">Lanbitou 密碼管理器</h2>
+    <p class="login-subtitle">請登入您的帳戶</p>
     <form id="login-form">
       <div>
         <label for="email">電子郵件</label>
@@ -16,20 +17,20 @@
       <div>
         <label for="password">密碼</label>
         <input id="password" name="password" type="password" required autocomplete="current-password" />
-        <p style="font-size:12px;color:#888;margin-top:4px;">
+        <p class="password-tip">
           輸入您註冊時設定的密碼，我們採用「零知識」架構，您的密碼不以明文形式傳輸或儲存。
-          <strong style="display:block;color:#2563eb;">請務必牢記此密碼，遺失將無法找回！</strong>
+          <strong>請務必牢記此密碼，遺失將無法找回！</strong>
         </p>
       </div>
-      <div style="display:flex;align-items:center;gap:8px;margin:8px 0;">
-        <input id="remember-me" name="remember-me" type="checkbox" style="width:16px;height:16px;" />
-        <label for="remember-me" style="font-size:13px;color:#666;">記住我</label>
+      <div class="remember-row">
+        <input id="remember-me" name="remember-me" type="checkbox" />
+        <label for="remember-me" class="remember-label">記住我</label>
       </div>
-      <button type="submit" id="login-btn" style="width:100%;">登入</button>
-      <div id="login-error" style="color:red;margin-top:8px;"></div>
+      <button type="submit" id="login-btn">登入</button>
+      <div id="login-error"></div>
     </form>
-    <div id="login-hint" style="display:none;color:#b91c1c;font-size:12px;margin-top:8px;"></div>
-    <div style="text-align:center;margin-top:12px;">
+    <div id="login-hint"></div>
+    <div class="login-register-link">
       還沒有帳戶？
       <a href="register.html" id="to-register">立即註冊</a>
     </div>

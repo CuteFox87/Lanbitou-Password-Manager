@@ -7,8 +7,8 @@
 </head>
 <body>
   <div class="register-container">
-    <h2 style="text-align:center;">註冊帳戶</h2>
-    <p style="text-align:center;">建立您的 Lanbitou 密碼管理器帳戶</p>
+    <h2 class="register-title">註冊帳戶</h2>
+    <p class="register-subtitle">建立您的 Lanbitou 密碼管理器帳戶</p>
     <form id="register-form">
       <div>
         <label for="email">電子郵件</label>
@@ -32,7 +32,7 @@
       <div>
         <label for="password-hint">主密碼提示 (選填)</label>
         <input id="password-hint" name="password-hint" type="text" />
-        <p style="font-size:12px;color:#888;">
+        <p class="password-hint-tip">
           為自己創建一個主密碼提示，以防忘記主密碼。不應直接包含主密碼內容。
         </p>
       </div>
@@ -49,11 +49,11 @@
       <div id="form-error"></div>
       <div id="form-success"></div>
     </form>
-    <div style="text-align:center;margin-top:12px;">
+    <div class="register-login-link">
       已有帳戶？
       <a href="login.html" id="to-login">登入</a>
     </div>
-    <div id="register-success" style="display: none;">
+    <div id="register-success">
       <h3>註冊成功</h3>
       <p>您的 Lanbitou 密碼管理器帳戶已創建</p>
       <p class="register-success-desc">主密碼是您剛才設定的密碼，用於：</p>

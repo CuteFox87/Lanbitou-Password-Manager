@@ -1,10 +1,19 @@
 .register-container {
-  max-width: 400px;
-  margin: 12px auto;
+  width: 350px;
+  height: 510px;
+  margin: 0 auto;
   background: #fff;
   border-radius: 12px;
   box-shadow: 0 2px 16px rgba(0,0,0,0.07);
-  padding: 16px 24px;
+  padding: 24px 24px 16px 24px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.register-title, .register-subtitle {
+  text-align: center;
 }
 
 .register-title {
@@ -81,6 +90,34 @@
 .password-warning-box ul {
   margin: 4px 0 0 18px;
   font-size: 12px;
+}
+
+/* 讓表單欄位名稱左對齊，輸入框寬度一致 */
+#register-form label {
+  display: block;
+  text-align: left;
+  margin-bottom: 4px;
+  font-weight: 500;
+  font-size: 14px;
+  padding-left: 2px;
+}
+
+#register-form input[type="email"],
+#register-form input[type="password"],
+#register-form input[type="text"] {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 8px 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 15px;
+  margin-top: 2px;
+}
+
+#register-form > div {
+  margin-bottom: 18px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 #register-btn, #go-login-btn {
