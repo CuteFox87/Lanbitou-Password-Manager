@@ -6,14 +6,14 @@ body {
 }
 
 .container {
-  max-width: 400px;
+  width: 100%;
+  max-width: 600px;      /* 讓桌面時更寬 */
   min-width: 0;
-  width: 96vw;
   margin: 12px auto;
   background: #fff;
   border-radius: 12px;
   box-shadow: 0 2px 16px rgba(0,0,0,0.07);
-  padding: 16px 8px 24px 8px;
+  padding: 16px 16px 24px 16px; /* 左右 padding 加大 */
 }
 
 .header-row {
@@ -143,11 +143,12 @@ input[type='text'], input[type='password'], input[type='url'], input[type='numbe
 
 #modal, #group-modal, #permission-modal {
   background: #fff;
-  padding: 16px 4vw;
+  padding: 24px 32px;
   border-radius: 8px;
-  min-width: 0;
-  max-width: 98vw;
+  min-width: 320px;
+  max-width: 420px;
   box-sizing: border-box;
+  margin: 0 auto;
 }
 
 #group-modal {
@@ -208,13 +209,14 @@ label {
   background: #be123c;
 }
 
-@media (max-width: 800px) {
+@media (max-width: 600px) {
   .container {
     padding: 16px 4vw;
     max-width: 98vw;
   }
   #modal, #group-modal, #permission-modal {
     max-width: 98vw;
+    min-width: 0;
     padding: 16px 4vw;
   }
 }
