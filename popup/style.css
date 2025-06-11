@@ -6,12 +6,14 @@ body {
 }
 
 .container {
-  background: white;
+  max-width: 400px;
+  min-width: 260px;
+  width: 90vw;
+  margin: 12px auto;
+  background: #fff;
   border-radius: 12px;
   box-shadow: 0 2px 16px rgba(0,0,0,0.07);
-  padding: 32px 24px;
-  margin: 40px auto;
-  max-width: 700px;
+  padding: 16px 12px 24px 12px;
 }
 
 .header-row {
@@ -24,6 +26,7 @@ body {
 .logo-title {
   font-weight: bold;
   font-size: 18px;
+  line-height: 1.2;
 }
 
 .subtitle {
@@ -56,6 +59,9 @@ h2 {
 }
 
 button, input, select {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
   font-family: inherit;
   border-radius: 6px;
   border: 1px solid #d1d5db;
@@ -124,8 +130,8 @@ input[type='text'], input[type='password'], input[type='url'], input[type='numbe
   background: #fff;
   padding: 24px;
   border-radius: 8px;
-  max-width: 400px;
-  width: 100%;
+  min-width: 220px;
+  max-width: 95vw;
 }
 
 #group-modal {
@@ -151,9 +157,16 @@ label {
 
 #add-btn, #create-group-btn {
   background: #10b981;
-  color: white;
-  margin-top: 8px;
-  margin-bottom: 8px;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  margin: 8px 0;
+  font-size: 15px;
+  font-weight: bold;
+  box-shadow: 0 1px 4px rgba(16,185,129,0.08);
+  cursor: pointer;
+  transition: background 0.2s;
+  padding: 10px 0;
 }
 
 #add-btn:hover, #create-group-btn:hover {
@@ -161,9 +174,18 @@ label {
 }
 
 #logout-btn {
-  background: #e11d48;
-  color: white;
+  width: auto;
+  min-width: 64px;
   padding: 6px 16px;
+  background: #e11d48;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  margin-left: 8px;
+  box-shadow: 0 2px 8px rgba(225,29,72,0.08);
+  cursor: pointer;
+  transition: background 0.2s;
 }
 
 #logout-btn:hover {
