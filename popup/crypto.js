@@ -1,8 +1,8 @@
-const PBKDF2_ITERATIONS = 600000; // 推導迭代次數
-const LOGIN_KEY_SALT = "lanbitou-login-salt"; // 固定的登入金鑰鹽值
-const LOGIN_KEY_LENGTH = 32; // 登入金鑰長度（字節）
-const ENC_KEY_LENGTH = 32; // 加密密鑰長度（字節）
-const IV_LENGTH = 12; // 初始向量長度（字節）
+const PBKDF2_ITERATIONS = 600000;
+const LOGIN_KEY_SALT = "lanbitou-login-salt";
+const LOGIN_KEY_LENGTH = 32;
+const ENC_KEY_LENGTH = 32;
+const IV_LENGTH = 12;
 
 function generateRandomBytes(length) {
   const bytes = new Uint8Array(length);
@@ -11,7 +11,6 @@ function generateRandomBytes(length) {
 }
 
 async function deriveLoginKey(masterPassword) {
-  console.log('deriveLoginKey:', { masterPassword });
   try {
     const encoder = new TextEncoder();
     const passwordData = encoder.encode(masterPassword);
@@ -36,8 +35,7 @@ async function deriveLoginKey(masterPassword) {
       LOGIN_KEY_LENGTH * 8
     );
 
-    console.log('loginKey:', arrayBufferToBase64(derivedBits));
-    return arrayBufferToBase64(derivedBits);
+    return derivedBits; // 直接回傳 ArrayBuffer
   } catch (error) {
     console.error('登入金鑰推導失敗:', error);
     throw new Error('登入金鑰推導失敗');
@@ -45,7 +43,6 @@ async function deriveLoginKey(masterPassword) {
 }
 
 async function deriveEncryptionKey(masterPassword, dataSalt) {
-  console.log('deriveEncryptionKey:', { masterPassword, dataSalt }); 
   try {
     const encoder = new TextEncoder();
     const passwordData = encoder.encode(masterPassword);
@@ -70,7 +67,7 @@ async function deriveEncryptionKey(masterPassword, dataSalt) {
       ENC_KEY_LENGTH * 8
     );
 
-    return derivedBits;
+    return derivedBits; // 直接回傳 ArrayBuffer
   } catch (error) {
     console.error('加密密鑰推導失敗:', error);
     throw new Error('加密密鑰推導失敗');
@@ -107,8 +104,8 @@ async function encrypt(data, encKeyData) {
     );
 
     return {
-      ciphertext: arrayBufferToBase64(ciphertext),
-      iv: arrayBufferToBase64(iv.buffer)
+      ciphertext: ciphertext, // ArrayBuffer
+      iv: iv.buffer           // ArrayBuffer
     };
   } catch (error) {
     console.error('加密失敗:', error);
@@ -119,16 +116,14 @@ async function encrypt(data, encKeyData) {
 async function decrypt(encryptedData, encKeyData) {
   try {
     const key = await importEncryptionKey(encKeyData);
-    const cipherBuffer = base64ToArrayBuffer(encryptedData.ciphertext);
-    const ivBuffer = base64ToArrayBuffer(encryptedData.iv);
 
     const decryptedBuffer = await crypto.subtle.decrypt(
       {
         name: 'AES-GCM',
-        iv: new Uint8Array(ivBuffer)
+        iv: new Uint8Array(encryptedData.iv)
       },
       key,
-      cipherBuffer
+      encryptedData.ciphertext
     );
 
     const decoder = new TextDecoder();
@@ -137,15 +132,6 @@ async function decrypt(encryptedData, encKeyData) {
     console.error('解密失敗:', error);
     throw new Error('解密失敗');
   }
-}
-
-function arrayBufferToBase64(buffer) {
-  const bytes = new Uint8Array(buffer);
-  let binary = '';
-  for (let i = 0; i < bytes.byteLength; i++) {
-    binary += String.fromCharCode(bytes[i]);
-  }
-  return btoa(binary);
 }
 
 function base64ToArrayBuffer(base64) {
