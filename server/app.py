@@ -19,7 +19,7 @@ app = Flask(__name__)
 
 # 配置 CORS
 CORS(app, 
-     resources={r"/*": {"origins": ["http://localhost:3000", "https://localhost:3000"]}}, 
+     resources={r"/*": {"origins": ["http://localhost:3000", "https://localhost:3000", "chrome-extension://fkccdkmdocfojhkhjcbgofffbiabclgh"]}}, 
      supports_credentials=True,
      allow_headers=["Content-Type", "Authorization"])
 
