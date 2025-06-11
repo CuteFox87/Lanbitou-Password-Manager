@@ -1,13 +1,10 @@
 'use client';
 
-import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect, useCallback, ReactNode } from 'react';
 import { useRouter } from 'next/navigation';
 import * as cryptoUtils from '@/lib/crypto';
 import * as apiClient from '@/lib/api';
-import { isJwtValid, getUserIdFromJwt } from '@/lib/jwt';
-
-// 定義後端API路徑
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+import { isJwtValid } from '@/lib/jwt';
 
 // 使用者資訊類型
 type User = {
@@ -54,6 +51,26 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
 
+  // 登出函數
+  const logout = useCallback(() => {
+    // 1. 清除加密密鑰
+    setEncryptionKey(null);
+    sessionStorage.removeItem(ENCRYPTION_KEY_KEY);
+    
+    // 2. 清除令牌和用戶信息
+    apiClient.clearAuthData();
+    localStorage.removeItem(USER_KEY);
+    
+    // 3. 重置狀態
+    setUser(null);
+    setToken(null);
+    setError(null);
+    setIsFirstTimeLogin(false);
+    
+    // 4. 導向登入頁面
+    router.push('/login');
+  }, [router]);
+
   // 檢查使用者是否已登入
   useEffect(() => {
     const checkAuthStatus = () => {
@@ -82,7 +99,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     };
 
     checkAuthStatus();
-  }, []);
+  }, [logout]);
 
   // 註冊函數
   const register = async (email: string, password: string, passwordHint?: string): Promise<boolean> => {
@@ -177,26 +194,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       setIsLoading(false);
       return false;
     }
-  };
-
-  // 登出函數
-  const logout = () => {
-    // 1. 清除加密密鑰
-    setEncryptionKey(null);
-    sessionStorage.removeItem(ENCRYPTION_KEY_KEY);
-    
-    // 2. 清除令牌和用戶信息
-    apiClient.clearAuthData();
-    localStorage.removeItem(USER_KEY);
-    
-    // 3. 重置狀態
-    setUser(null);
-    setToken(null);
-    setError(null);
-    setIsFirstTimeLogin(false);
-    
-    // 4. 導向登入頁面
-    router.push('/login');
   };
 
   // 設置首次登入完成

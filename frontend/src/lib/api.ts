@@ -84,7 +84,7 @@ export interface PasswordEntry {
 async function apiRequest<T>(
   endpoint: string, 
   method: string = 'GET', 
-  data?: any,
+  data?: unknown,
   requiresAuth: boolean = false
 ): Promise<T> {
   const url = `${API_BASE_URL}${endpoint}`;
@@ -135,7 +135,7 @@ async function apiRequest<T>(
         const errorData = await response.json();
         errorMessage = errorData.msg || errorMessage;
         console.error('API 錯誤響應:', errorData);
-      } catch (e) {
+      } catch {
         // 無法解析 JSON，嘗試獲取文本
         try {
           const errorText = await response.text();
@@ -203,8 +203,8 @@ export async function login(email: string, loginKey: string): Promise<LoginRespo
 /**
  * 獲取用戶信息
  */
-export async function getUserInfo(): Promise<any> {
-  return await apiRequest<any>('/user-info', 'GET', undefined, true);
+export async function getUserInfo(): Promise<{ id: number; email: string }> {
+  return await apiRequest<{ id: number; email: string }>('/user-info', 'GET', undefined, true);
 }
 
 /**

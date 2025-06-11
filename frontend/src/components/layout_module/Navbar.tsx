@@ -10,7 +10,7 @@ import { useAuth } from '@/contexts/AuthContext';
  * 固定在頁面頂部
  */
 export function Navbar() {
-  const { user, isAuthenticated, logout } = useAuth();
+  const { isAuthenticated, logout } = useAuth();
   const pathname = usePathname();
   
   // 如果用戶未認證，不顯示導航欄

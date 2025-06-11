@@ -77,7 +77,7 @@ export default function Login() {
     };
     
     checkSavedCredentials();
-  }, []);
+  }, [email]);
 
   return (
     <Section spacing="lg" className="py-12">

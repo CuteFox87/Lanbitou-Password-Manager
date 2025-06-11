@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 import { 
@@ -12,7 +12,7 @@ import {
 } from '@/components/layout_module/card';
 import { Section } from '@/components/layout_module/section';
 import { Navbar } from '@/components/layout_module/Navbar';
-import { getToken, getPasswords, storePassword, updatePassword, deletePassword, ApiError } from '@/lib/api';
+import { getPasswords, storePassword, updatePassword, deletePassword } from '@/lib/api';
 import { encrypt, decrypt, base64ToArrayBuffer, arrayBufferToBase64 } from '@/lib/crypto';
 
 // 密碼項目類型
@@ -26,16 +26,7 @@ type PasswordEntry = {
   owner_id?: number;
 };
 
-// 前端解密後存儲的密碼條目
-type DecryptedPassword = {
-  id: string;
-  site: string;
-  username: string;
-  password: string;
-  url: string;
-  notes?: string;
-  owner_id?: number;
-};
+
 
 export default function VaultPage() {
   const { isAuthenticated, isLoading: authLoading, encryptionKey } = useAuth();
@@ -43,7 +34,7 @@ export default function VaultPage() {
   const [passwords, setPasswords] = useState<PasswordEntry[]>([]);
   const [isAddingNew, setIsAddingNew] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
-  const [currentPassword, setCurrentPassword] = useState<PasswordEntry | null>(null);
+  const [, setCurrentPassword] = useState<PasswordEntry | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -60,31 +51,8 @@ export default function VaultPage() {
     notes: ''
   });
   
-  // 未登入用戶重定向至登入頁
-  useEffect(() => {
-    console.log('正在檢查vault頁面認證狀態:', {
-      isLoading: authLoading,
-      isAuthenticated,
-      hasEncryptionKey: !!encryptionKey
-    });
-
-    if (!authLoading) {
-      if (!isAuthenticated) {
-        console.log('未認證，重定向到登入頁');
-        router.push('/login');
-      } else if (!encryptionKey) {
-        console.log('缺少加密密鑰，重新登入獲取密鑰');
-        // 如果沒有加密密鑰，也重定向到登入頁，強制重新登入
-        router.push('/login');
-      } else {
-        // 載入密碼
-        fetchPasswords();
-      }
-    }
-  }, [authLoading, isAuthenticated, encryptionKey, router]);
-  
   // 獲取並解密密碼列表
-  const fetchPasswords = async () => {
+  const fetchPasswords = useCallback(async () => {
     try {
       setIsLoading(true);
       setError(null);
@@ -143,7 +111,30 @@ export default function VaultPage() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [encryptionKey]);
+  
+  // 未登入用戶重定向至登入頁
+  useEffect(() => {
+    console.log('正在檢查vault頁面認證狀態:', {
+      isLoading: authLoading,
+      isAuthenticated,
+      hasEncryptionKey: !!encryptionKey
+    });
+
+    if (!authLoading) {
+      if (!isAuthenticated) {
+        console.log('未認證，重定向到登入頁');
+        router.push('/login');
+      } else if (!encryptionKey) {
+        console.log('缺少加密密鑰，重新登入獲取密鑰');
+        // 如果沒有加密密鑰，也重定向到登入頁，強制重新登入
+        router.push('/login');
+      } else {
+        // 載入密碼
+        fetchPasswords();
+      }
+    }
+  }, [authLoading, isAuthenticated, encryptionKey, router, fetchPasswords]);
   
   // 處理表單輸入改變
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {

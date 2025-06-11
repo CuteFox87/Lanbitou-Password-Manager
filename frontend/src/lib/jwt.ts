@@ -11,7 +11,7 @@ export interface JwtPayload {
   sub: string;      // 用戶ID
   exp?: number;     // 過期時間（UNIX 時間戳，秒）
   iat?: number;     // 簽發時間（UNIX 時間戳，秒）
-  [key: string]: any; // 其他自定義欄位
+  [key: string]: unknown; // 其他自定義欄位
 }
 
 /**
@@ -32,8 +32,8 @@ export function parseJwt(token: string): JwtPayload {
         .join('')
     );
     return JSON.parse(jsonPayload);
-  } catch (error) {
-    console.error('JWT 解析失敗:', error);
+  } catch {
+    console.error('JWT 解析失敗');
     throw new Error('無效的 JWT 令牌');
   }
 }
@@ -50,7 +50,7 @@ export function isJwtValid(token: string | null): boolean {
     
     // 檢查是否有過期時間且未過期
     return payload.exp ? payload.exp > currentTime : false;
-  } catch (error) {
+  } catch {
     return false;
   }
 }
@@ -62,7 +62,7 @@ export function getUserIdFromJwt(token: string): string | null {
   try {
     const payload = parseJwt(token);
     return payload.sub || null;
-  } catch (error) {
+  } catch {
     return null;
   }
 }
@@ -79,7 +79,7 @@ export function getJwtRemainingTime(token: string): number {
     const remainingTime = payload.exp - currentTime;
     
     return remainingTime > 0 ? remainingTime : 0;
-  } catch (error) {
+  } catch {
     return 0;
   }
 }
