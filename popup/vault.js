@@ -199,9 +199,6 @@ document.addEventListener('DOMContentLoaded', function () {
             notes: entryNotes.value
           })
         });
-        console.log('[加密] master_password:', result.master_password);
-        console.log('[加密] data_salt:', result.data_salt);
-        console.log('[加密] encryptionKey(base64):', arrayBufferToBase64(encryptionKey));
     const encrypted = await encryptData(dataToEncrypt, encryptionKey);
       } else {
         await fetch('http://localhost:5000/storage', {

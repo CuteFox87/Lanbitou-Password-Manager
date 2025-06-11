@@ -139,32 +139,6 @@ async function decrypt(encryptedData, encKeyData) {
   }
 }
 
-async function decrypt(encryptedData, encKeyData) {
-  console.log('解密時用的 key:', encryptionKey);
-  console.log('解密時用的 master_password:', masterPassword);
-  console.log('解密時用的 data_salt:', dataSalt);
-  try {
-    const key = await importEncryptionKey(encKeyData);
-    const cipherBuffer = base64ToArrayBuffer(encryptedData.ciphertext);
-    const ivBuffer = base64ToArrayBuffer(encryptedData.iv);
-
-    const decryptedBuffer = await crypto.subtle.decrypt(
-      {
-        name: 'AES-GCM',
-        iv: new Uint8Array(ivBuffer)
-      },
-      key,
-      cipherBuffer
-    );
-
-    const decoder = new TextDecoder();
-    return decoder.decode(decryptedBuffer);
-  } catch (error) {
-    console.error('解密失敗:', error);
-    throw new Error('解密失敗');
-  }
-}
-
 function arrayBufferToBase64(buffer) {
   const bytes = new Uint8Array(buffer);
   let binary = '';
