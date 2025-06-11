@@ -47,16 +47,25 @@ document.addEventListener('DOMContentLoaded', function () {
     errorMsg.textContent = '';
     passwordListDiv.innerHTML = '正在載入密碼資料...';
     try {
+      // 這裡假設後端回傳的是 ArrayBuffer 格式的密文與 IV（需用 blob 或 arraybuffer 取得）
       const res = await fetch('http://localhost:5000/passwords', {
         headers: { Authorization: `Bearer ${await getToken()}` }
       });
       if (!res.ok) throw new Error('獲取密碼列表失敗');
+      // 假設後端回傳 JSON，每個 item 的 encrypted_data, iv 都是 base64 字串
+      // 若後端直接回傳 ArrayBuffer，需用 res.arrayBuffer() 處理
       const data = await res.json();
       passwords = await Promise.all(
         data.map(async (item) => {
           try {
-            console.log('[解密] encryptionKey(base64):', arrayBufferToBase64(encryptionKey));
-            const decrypted = await decryptData(item.encrypted_data, item.iv, encryptionKey);
+            // 將 base64 轉回 ArrayBuffer（如果後端直接傳 ArrayBuffer，這裡可省略）
+            const encryptedDataBuffer = typeof item.encrypted_data === 'string'
+              ? base64ToArrayBuffer(item.encrypted_data)
+              : item.encrypted_data;
+            const ivBuffer = typeof item.iv === 'string'
+              ? base64ToArrayBuffer(item.iv)
+              : item.iv;
+            const decrypted = await decryptData(encryptedDataBuffer, ivBuffer, encryptionKey);
             const parsed = JSON.parse(decrypted);
             return {
               id: item.id,
@@ -72,8 +81,7 @@ document.addEventListener('DOMContentLoaded', function () {
               error: e,
               id: item.id,
               encrypted_data: item.encrypted_data,
-              iv: item.iv,
-              encryptionKey: arrayBufferToBase64(encryptionKey)
+              iv: item.iv
             });
             return {
               id: item.id,
@@ -183,33 +191,35 @@ document.addEventListener('DOMContentLoaded', function () {
         notes: entryNotes.value
       });
       const encrypted = await encryptData(dataToEncrypt, encryptionKey);
-      const req = {
+
+      // 轉 base64 字串
+      const encryptedDataBase64 = arrayBufferToBase64(encrypted.ciphertext);
+      const ivBase64 = arrayBufferToBase64(encrypted.iv);
+          
+      const payload = {
         site: entryTitle.value,
-        encrypted_data: encrypted.ciphertext,
-        iv: encrypted.iv
+        encrypted_data: encryptedDataBase64,
+        iv: ivBase64,
+        notes: entryNotes.value
       };
+      
       if (entryId.value) {
         await fetch(`http://localhost:5000/storage/${entryId.value}`, {
           method: 'PUT',
-          headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${await getToken()}` },
-          body: JSON.stringify({
-            site: entryTitle.value,
-            encrypted_data: encrypted.ciphertext,
-            iv: encrypted.iv,
-            notes: entryNotes.value
-          })
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${await getToken()}`
+          },
+          body: JSON.stringify(payload)
         });
-    const encrypted = await encryptData(dataToEncrypt, encryptionKey);
       } else {
         await fetch('http://localhost:5000/storage', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${await getToken()}` },
-          body: JSON.stringify({
-            site: entryTitle.value,
-            encrypted_data: encrypted.ciphertext,
-            iv: encrypted.iv,
-            notes: entryNotes.value
-          })
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${await getToken()}`
+          },
+          body: JSON.stringify(payload)
         });
       }
       modalBg.style.display = 'none';
@@ -262,7 +272,7 @@ document.addEventListener('DOMContentLoaded', function () {
     return await encrypt(plain, key);
   }
   async function decryptData(ciphertext, iv, key) {
-    return await decrypt({ciphertext: base64ToArrayBuffer(ciphertext), iv: base64ToArrayBuffer(iv)}, key);
+    return await decrypt({ciphertext, iv}, key);
   }
   async function openPermissionModal(passwordId) {
     grantPasswordId.value = passwordId;
