@@ -108,12 +108,13 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     form.dataset.weakConfirmed = "";
     try {
+      const loginKey = await deriveLoginKey(password);
       const res = await fetch('http://localhost:5000/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           email,
-          login_key: password,
+          login_key: loginKey,
           password_hint: passwordHint || ""
         })
       });
