@@ -9,13 +9,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
   let loginAttempts = 0;
 
-  document.getElementById('to-register').addEventListener('click', function(e) {
-    e.preventDefault();
-    window.location.href = 'register.html';
-  });
-
-  loginAttempts = 0;
-
   form.addEventListener('submit', async function (e) {
     e.preventDefault();
     errorDiv.textContent = '';
@@ -87,8 +80,11 @@ document.addEventListener('DOMContentLoaded', function () {
     } catch (err) {
       errorDiv.textContent = '無法連線到伺服器';
     } finally {
-      loginBtn.disabled = false;
-      loginBtn.textContent = '登入';
+      // 只有不是倒數時才恢復可點擊
+      if (!loginBtn.textContent.startsWith('請稍候')) {
+        loginBtn.disabled = false;
+        loginBtn.textContent = '登入';
+      }
     }
   });
 

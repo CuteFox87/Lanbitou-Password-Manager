@@ -9,6 +9,7 @@
         "default_title": "lanbitou"
     },
     "permissions": ["storage"],
+    "host_permissions": ["http://localhost:5000/*"],
     "web_accessible_resources": [
         {
             "resources": [
