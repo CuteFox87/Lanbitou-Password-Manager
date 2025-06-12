@@ -13,7 +13,7 @@
     "web_accessible_resources": [
         {
             "resources": [
-                "register.html", "vault.html", "login.html", "icon.png", "style.css"
+                "vault.html", "login.html", "icon.png", "style.css"
             ],
             "matches": ["<all_urls>"]
         }
